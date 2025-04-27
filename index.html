@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrieNeon - Avisos en Neón Flex</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style id="app-style">
+        :root {
+            --primary-color: #8A2BE2;
+            --secondary-color: #FF00FF;
+            --dark-color: #1A1A1A;
+            --light-color: #F5F5F5;
+            --accent-color: #00FFFF;
+            --text-color: #333333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: rgba(26, 26, 26, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+        }
+
+        .navbar-brand img {
+            height: 140px;       /* adjust as needed */
+            width: auto;
+            display: block;
+            /* remove any inherited text-glow, or if you want glow: */
+            /* filter: drop-shadow(0 0 10px var(--accent-color)) drop-shadow(0 0 20px var(--accent-color)); */
+        }
+
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+
+        .navbar-brand span:last-child {
+            color: var(--secondary-color);
+        }
+
+        .nav-link {
+            color: var(--light-color) !important;
+            font-weight: 500;
+            margin: 0 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(50, 0, 60, 0.9), rgba(20, 0, 20, 0.7)), 
+                        url('https://source.unsplash.com/random/1920x1080/?neon') no-repeat center center/cover;
+            height: 120vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, rgba(26, 26, 26, 0.8) 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        .neon-btn {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 30px 90px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+        }
+
+        .neon-btn:hover {
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: var(--accent-color);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .neon-btn:hover::before {
+            width: 100%;
+        }
+
+        /* Catalog Section */
+        .catalog {
+            padding: 80px 0;
+            background-color: var(--dark-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            color: var(--light-color);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .search-bar {
+            margin-bottom: 40px;
+        }
+
+        .search-input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light-color);
+            padding: 12px 20px;
+            border-radius: 50px;
+            width: 100%;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .filter-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light-color);
+            padding: 12px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: var(--accent-color);
+        }
+
+        .product-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 15px var(--primary-color);
+        }
+
+        .product-img {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 20px;
+            background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+            position: relative;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+
+        .product-price {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Product Detail Section */
+        .product-detail {
+            padding: 80px 0;
+            background-color: var(--dark-color);
+            display: none;
+        }
+
+        .product-gallery {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .product-gallery-main {
+            height: 800px;
+            overflow: hidden;
+            border-radius: 20px;
+            margin-bottom: 15px;
+        }
+
+        .product-gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-gallery-thumbs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-thumb:hover, .gallery-thumb.active {
+            opacity: 1;
+            box-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .product-detail-info h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--light-color);
+        }
+
+        .product-detail-description {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .product-specs {
+            margin-bottom: 30px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--light-color);
+        }
+
+        .spec-value {
+            color: var(--accent-color);
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(to bottom, var(--dark-color), #000);
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .contact-info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .contact-info-icon i {
+            color: var(--light-color);
+            font-size: 1.2rem;
+        }
+
+        .contact-info-text h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--light-color);
+        }
+
+        .contact-info-text p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light-color);
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 0 20px;
+            background-color: #111;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+        }
+
+        .footer-logo span {
+            color: var(--primary-color);
+        }
+
+        .footer-logo span:last-child {
+            color: var(--secondary-color);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-color);
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .footer-links h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--light-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .product-gallery-main {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .product-detail-info h2 {
+                font-size: 2rem;
+            }
+            
+            .product-gallery-main {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .neon-btn {
+                padding: 10px 20px;
+            }
+            
+            .product-gallery-thumbs {
+                display: none;
+            }
+        }
+
+        /* Animations */
+        @keyframes neonGlow {
+            0% {
+                text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+            }
+            50% {
+                text-shadow: 0 0 20px var(--accent-color), 0 0 30px var(--accent-color), 0 0 40px var(--accent-color);
+            }
+            100% {
+                text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+            }
+        }
+
+        .neon-text {
+            animation: neonGlow 2s infinite alternate;
+        }
+
+        /* Loading States */
+        .btn-loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .btn-loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-top: -10px;
+            margin-left: -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--light-color);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn-success {
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+        }
+
+        .btn-error {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+        }
+
+        /* Floating Chat + WhatsApp Buttons */
+        .float-btn {
+            position: fixed;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+        .float-chat,
+        .float-whatsapp {
+            bottom: 20px;        
+            background-color: #15ff00;
+            animation: neonPulse 2s infinite alternate;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .float-chat:hover,
+        .float-whatsapp:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow:
+                0 0 20px rgba(255,255,255,1),
+                0 0 40px rgba(255,255,255,0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <!-- Replace text logo with image logo -->
+            <a class="navbar-brand" href="javascript:void(0)">
+                <!-- Logo image link inserted here -->
+                <img src="imagenes/logo.png" 
+                     alt="OrieNeon Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home" id="nav-home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog" id="nav-catalog">Catálogo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact" id="nav-contact">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1 class="neon-text">Ilumina tu negocio con <span>OrieNeon</span></h1>
+                    <p>Somos especialistas en diseño y fabricación de avisos en neón flex personalizados para dar vida a tus ideas. Creamos señalización luminosa única que destaca tu marca.</p>
+                    <a href="#catalog" class="btn neon-btn">Ver Catálogo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section class="catalog" id="catalog">
+        <div class="container">
+            <h2 class="section-title neon-text">Nuestro Catálogo</h2>
+            <div class="row search-bar">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <input type="text" class="form-control search-input" placeholder="Buscar productos...">
+                </div>
+                <div class="col-md-4 d-flex gap-2">
+                    <button class="btn filter-btn flex-grow-1">Color <i class="fas fa-caret-down ms-2"></i></button>
+                    <button class="btn filter-btn flex-grow-1">Tamaño <i class="fas fa-caret-down ms-2"></i></button>
+                </div>
+            </div>
+
+            <div class="row" id="product-grid">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="1">
+                        <div class="product-img">
+                            <img src="imagenes/abril.jpg" alt="Letrero Neón Personalizado">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Letrero Neón Personalizado</h3>
+                            <p class="product-price">Desde $149.99</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="2">
+                        <div class="product-img">
+                            <img src="imagenes/corporativo.jpg" alt="Logo Corporativo en Neón">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Logo Corporativo en Neón</h3>
+                            <p class="product-price">Desde $199.99</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="3">
+                        <div class="product-img">
+                            <img src="imagenes/happy.jpg" alt="Neón Decorativo">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Neón Decorativo</h3>
+                            <p class="product-price">Desde $150.000 COP</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="4">
+                        <div class="product-img">
+                            <img src="imagenes/manolo.jpg" alt="Señalización Comercial">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Señalización Comercial</h3>
+                            <p class="product-price">Desde $179.99</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="5">
+                        <div class="product-img">
+                            <img src="https://source.unsplash.com/random/600x400/?neon,sign,5" alt="Neón para Eventos">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Neón para Eventos</h3>
+                            <p class="product-price">Desde $159.99</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="product-card" data-product-id="6">
+                        <div class="product-img">
+                            <img src="imagenes/motivacional.jpg" alt="Frases Motivacionales">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">Frases Motivacionales</h3>
+                            <p class="product-price">Desde $139.99</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail" id="product-detail">
+        <div class="container">
+            <button class="btn neon-btn mb-4" id="back-to-catalog"><i class="fas fa-arrow-left me-2"></i> Volver al Catálogo</button>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-gallery">
+                        <div class="product-gallery-main">
+                            <img id="main-product-image" src="imagenes/corporativo.jpg" alt="Producto Neón">
+                        </div>
+                        <div class="product-gallery-thumbs">
+                            <div class="gallery-thumb active">
+                                <img src="imagenes/happy.jpg" alt="Thumbnail 1">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="imagenes/corporativo.jpg" alt="Thumbnail 2">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="https://source.unsplash.com/random/800x602/?neon,sign" alt="Thumbnail 3">
+                            </div>
+                            <div class="gallery-thumb">
+                                <img src="https://source.unsplash.com/random/800x603/?neon,sign" alt="Thumbnail 4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="product-detail-info">
+                        <h2 id="product-detail-name">Letrero Neón Personalizado</h2>
+                        <p class="product-detail-description">
+                            Nuestros letreros de neón flex personalizados son ideales para dar vida a tu marca o mensaje. Fabricados con materiales de alta calidad que garantizan durabilidad y un brillo excepcional. Perfectos para negocios, eventos o decoración de interiores.
+                        </p>
+                        
+                        <div class="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Material:</span>
+                                <span class="spec-value">Neón Flex LED de alta calidad</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Colores disponibles:</span>
+                                <span class="spec-value">Múltiples (personalizable)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Tamaños:</span>
+                                <span class="spec-value">Personalizado según diseño</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Consumo eléctrico:</span>
+                                <span class="spec-value">Bajo consumo (tecnología LED)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Instalación:</span>
+                                <span class="spec-value">Interior/Exterior (a especificar)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Garantía:</span>
+                                <span class="spec-value">4 meses</span>
+                            </div>
+                        </div>
+                        
+                        <div class="product-detail-price" id="product-detail-price">Desde $149.99</div>
+                        
+                        <a href="#contact" class="btn neon-btn">Solicitar Presupuesto</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title neon-text">Contáctanos</h2>
+            
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="contact-info">
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <h4>Ubicación</h4>
+                                <p>Carrera 58 # 59 a 29. bosques del norte , Rionegro</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <h4>Teléfono</h4>
+                                <p>3027000124</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <h4>Email</h4>
+                                <p>info@orieneon.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <h4>Horario</h4>
+                                <p>Lunes - Viernes: 8:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" id="name" placeholder="Nombre" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control" id="email" placeholder="Email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="subject" placeholder="Asunto" required>
+                            </div>
+                            <div class="mb-4">
+                                <textarea class="form-control" id="message" placeholder="Mensaje" required></textarea>
+                            </div>
+                            <button type="submit" class="btn neon-btn w-100" id="submitButton">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="footer-logo"><span>Orie</span><span>Neon</span></div>
+                    <p class="footer-text">Especialistas en señalización luminosa con tecnología neón flex. Diseñamos y fabricamos soluciones personalizadas que dan vida a tus ideas.</p>
+                    <div class="footer-social">
+                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="javascript:void(0)" class="social-icon"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-4 mb-5 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Enlaces</h4>
+                        <ul>
+                            <li><a href="#home">Inicio</a></li>
+                            <li><a href="#catalog">Catálogo</a></li>
+                            <li><a href="#contact">Contacto</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4 mb-5 mb-md-0">
+                    <div class="footer-links">
+                        <h4>Productos</h4>
+                        <ul>
+                            <li><a href="javascript:void(0)">Letreros Personalizados</a></li>
+                            <li><a href="javascript:void(0)">Logotipos Corporativos</a></li>
+                            <li><a href="javascript:void(0)">Decoración Interior</a></li>
+                            <li><a href="javascript:void(0)">Señalización Comercial</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-4">
+                    <div class="footer-links">
+                        <h4>Soporte</h4>
+                        <ul>
+                            <li><a href="javascript:void(0)">Preguntas Frecuentes</a></li>
+                            <li><a href="javascript:void(0)">Términos y Condiciones</a></li>
+                            <li><a href="javascript:void(0)">Política de Privacidad</a></li>
+                            <li><a href="javascript:void(0)">Garantía</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 OrieNeon. Todos los derechos reservados. Diseñado con <i class="fas fa-heart text-danger"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp floating button -->
+    <a href="https://wa.me/3027000124"
+       target="_blank"
+       id="whatsapp-float-btn"
+       style="position: fixed;
+              bottom: 20px;
+              right: 20px;
+              background-color: #02f75c;
+              color: rgb(0, 255, 85);
+              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-decoration: none;
+              z-index: 1000;
+              box-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+        <i class="fab fa-whatsapp" style="font-size: 28px;"></i>
+    </a>
+
+    <!-- Floating Chat + WhatsApp Buttons -->
+    <a href="javascript:void(0)" 
+       class="float-btn float-chat" 
+       title="Chat Directo">
+        <i class="fas fa-comment-dots" style="font-size: 28px;"></i>
+    </a>
+
+    <a href="https://wa.me/3027000124" 
+       target="_blank" 
+       class="float-btn float-whatsapp" 
+       title="WhatsApp">
+        <i class="fab fa-whatsapp" style="font-size: 28px;"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script id="app-script">
+        $(document).ready(function() {
+            // Smooth scrolling for navigation links
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                
+                var target = this.hash;
+                var $target = $(target);
+                
+                $('html, body').animate({
+                    'scrollTop': $target.offset().top - 70
+                }, 800, 'swing');
+            });
+            
+            // Update active nav link on scroll
+            $(window).on('scroll', function() {
+                var scrollPosition = $(this).scrollTop();
+                
+                // Check each section's position and update the active link
+                $('section').each(function() {
+                    var target = $(this).attr('id');
+                    var offset = $(this).offset().top - 80;
+                    var height = $(this).outerHeight();
+                    
+                    if (scrollPosition >= offset && scrollPosition < offset + height) {
+                        $('.navbar-nav .nav-link').removeClass('active');
+                        $('.navbar-nav .nav-link[href="#' + target + '"]').addClass('active');
+                    }
+                });
+            });
+            
+            // Product card click event to show product details
+            $('.product-card').on('click', function() {
+                const productId = $(this).data('product-id');
+                $('#catalog').hide();
+                $('#product-detail').show();
+                
+                // In a real application, we would fetch product details from API
+                // For now, we'll just use static data
+                updateProductDetails(productId);
+                
+                // Scroll to top of product detail
+                $('html, body').animate({
+                    'scrollTop': $('#product-detail').offset().top - 70
+                }, 800, 'swing');
+            });
+            
+            // Back to catalog button
+            $('#back-to-catalog').on('click', function() {
+                $('#product-detail').hide();
+                $('#catalog').show();
+                
+                // Scroll to top of catalog
+                $('html, body').animate({
+                    'scrollTop': $('#catalog').offset().top - 70
+                }, 800, 'swing');
+            });
+            
+            // Gallery thumbnails click event
+            $('.gallery-thumb').on('click', function() {
+                $('.gallery-thumb').removeClass('active');
+                $(this).addClass('active');
+                
+                const imgSrc = $(this).find('img').attr('src');
+                $('#main-product-image').attr('src', imgSrc);
+            });
+            
+            // Contact form submission
+            $('#contactForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const $submitBtn = $('#submitButton');
+                
+                // Show loading state
+                $submitBtn.addClass('btn-loading');
+                $submitBtn.text('');
+                
+                // Simulating form submission delay
+                setTimeout(function() {
+                    $submitBtn.removeClass('btn-loading');
+                    $submitBtn.addClass('btn-success');
+                    $submitBtn.html('<i class="fas fa-check me-2"></i> Mensaje Enviado');
+                    
+                    // Reset form
+                    $('#contactForm')[0].reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(function() {
+                        $submitBtn.removeClass('btn-success');
+                        $submitBtn.text('Enviar Mensaje');
+                    }, 3000);
+                }, 1500);
+            });
+            
+            // Function to update product details
+            function updateProductDetails(productId) {
+                // In a real application, we would fetch this data from an API
+                const products = {
+                    1: {
+                        name: "Letrero Neón Personalizado",
+                        price: "Desde $149.99",
+                        description: "Nuestros letreros de neón flex personalizados son ideales para dar vida a tu marca o mensaje. Fabricados con materiales de alta calidad que garantizan durabilidad y un brillo excepcional. Perfectos para negocios, eventos o decoración de interiores."
+                    },
+                    2: {
+                        name: "Logo Corporativo en Neón",
+                        price: "Desde $199.99",
+                        description: "Destaca tu marca con un logo corporativo en neón flex. Añade un toque de modernidad y exclusividad a tu negocio. Diseñamos y fabricamos según tus especificaciones exactas, respetando los colores y proporciones de tu identidad corporativa."
+                    },
+                    3: {
+                        name: "Neón Decorativo",
+                        price: "Desde $129.99",
+                        description: "Transforma cualquier espacio con nuestros neones decorativos. Ideales para hogares, habitaciones, fiestas o cualquier ambiente que desees iluminar con un toque especial. Disponibles en múltiples diseños y colores."
+                    },
+                    4: {
+                        name: "Señalización Comercial",
+                        price: "Desde $179.99",
+                        description: "Soluciones de señalización con neón flex para comercios, restaurantes y espacios públicos. Comunica de manera efectiva con letreros que captan la atención por su brillo y estética única. Personalizados según tus necesidades específicas."
+                    },
+                    5: {
+                        name: "Neón para Eventos",
+                        price: "Desde $159.99",
+                        description: "Haz que tu evento sea inolvidable con iluminación en neón flex personalizada. Perfectos para bodas, cumpleaños, inauguraciones y todo tipo de celebraciones. Disponibles para alquiler o compra."
+                    },
+                    6: {
+                        name: "Frases Motivacionales",
+                        price: "Desde $139.99",
+                        description: "Ilumina tu espacio con frases inspiradoras en neón flex. Añade personalidad y estilo a tu hogar u oficina con mensajes positivos que brillan. Elige entre nuestros diseños o solicita uno personalizado con tu frase favorita."
+                    }
+                };
+                
+                const product = products[productId];
+                
+                $('#product-detail-name').text(product.name);
+                $('#product-detail-price').text(product.price);
+                $('.product-detail-description').text(product.description);
+            }
+        });
+    </script>
+</body>
+</html>
